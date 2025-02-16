@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "vazir";
+  src: url("./Assets/Fonts/Vazir.eot");
+  src: url("./Assets/Fonts/Vazir.eot?#iefix") format("embedded-opentype"),
+    url("./Assets/Fonts/Vazir.woff2") format("woff2"),
+    url("./Assets/Fonts/Vazir.woff") format("woff"),
+    url("./Assets/Fonts/Vazir.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: auto;
+  font-family: "vazir";
+  max-width: 1200px;
+  max-height: 100vh;
+  background-color: #dedede;
+  color: #0f1035;
+}
