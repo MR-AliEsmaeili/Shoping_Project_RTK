@@ -4,7 +4,7 @@ const initialState = {
   selectedItems: [],
   itemCounter: 0,
   total: 0,
-  checkout: false,
+  Checkout: false,
 };
 
 const cartSlice = createSlice({
@@ -16,7 +16,7 @@ const cartSlice = createSlice({
         state.selectedItems.push({ ...action.payload, quantity: 1 });
         state.itemCounter = sumItems(state.selectedItems);
         state.total = sumPrice(state.selectedItems);
-        state.checkout = false;
+        state.Checkout = false;
       }
     },
     removeItem: (state, action) => {
@@ -43,16 +43,16 @@ const cartSlice = createSlice({
       state.total = sumPrice(state.selectedItems);
       state.itemCounter = sumItems(state.selectedItems);
     },
-    checkout: (state) => {
+    Checkout: (state) => {
       state.selectedItems = [];
       state.itemCounter = 0;
       state.total = 0;
-      state.checkout = true;
+      state.Checkout = true;
     },
   },
 });
 
 export default cartSlice.reducer;
 
-export const { addItem, increase, decrease, removeItem, checkout } =
+export const { addItem, increase, decrease, removeItem, Checkout } =
   cartSlice.actions;

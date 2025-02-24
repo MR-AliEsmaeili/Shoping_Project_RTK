@@ -1,16 +1,16 @@
 import { Link } from "react-router-dom";
-// import { useCart } from "../Context/cartProvider";
 
 import NOTFOUND from "../Assets/not-found.gif";
 
 import CardCheckout from "../Components/CardCheckout";
+import { useDispatch, useSelector } from "react-redux";
+import { Checkout } from "../Features/cartSlice";
 
 const CheckoutPage = () => {
-  const [state, dispatch] = [];
-  // const { selectedItems, itemCounter, total, checkout } = state;
-  const clickHandler = (type, payload) => {
-    dispatch({ type, payload });
-  };
+  const state = useSelector((state) => state.Cart);
+  const dispatch = useDispatch();
+  const { selectedItems, itemCounter, total, checkout } = state;
+
   if (!itemCounter) {
     return (
       <>
@@ -42,7 +42,7 @@ const CheckoutPage = () => {
       <div className="container mx-auto mt-8 flex flex-col md:flex-row gap-8 px-4 max-w-5xl">
         <div className="flex-1 flex flex-col gap-4">
           {selectedItems.map((p) => (
-            <CardCheckout key={p} p={p} clickHandler={clickHandler} />
+            <CardCheckout key={p.id} p={p} />
           ))}
         </div>
         <aside className="w-full h-fit md:w-1/3 bg-white rounded-lg p-6 shadow-lg">
@@ -61,7 +61,7 @@ const CheckoutPage = () => {
           </p>
           <button
             className="p-3 bg-green-400 rounded-xl my-5 font-bold shadow-gray-300  shadow-lg"
-            onClick={() => clickHandler("CHECKOUT", selectedItems)}
+            onClick={() => dispatch(Checkout(selectedItems))}
           >
             تسویه حساب
           </button>

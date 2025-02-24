@@ -2,8 +2,10 @@ import { ShortenText } from "../helpers/helper";
 
 import { FaCircleMinus, FaCirclePlus } from "react-icons/fa6";
 import { RiDeleteBin6Line } from "react-icons/ri";
-
-const CardCheckout = ({ p, clickHandler }) => {
+import { useDispatch } from "react-redux";
+import { decrease, increase, removeItem } from "../Features/cartSlice";
+const CardCheckout = ({ p }) => {
+  const dispatch = useDispatch();
   return (
     <ul
       key={p.id}
@@ -21,7 +23,7 @@ const CardCheckout = ({ p, clickHandler }) => {
         <div className="flex items-center gap-3">
           <button
             className="bg-slate-200 text-green-600 duration-300 py-1 px-3 rounded-lg hover:text-green-700"
-            onClick={() => clickHandler("INCREASE", p)}
+            onClick={() => dispatch(increase(p))}
           >
             <FaCirclePlus />
           </button>
@@ -29,14 +31,14 @@ const CardCheckout = ({ p, clickHandler }) => {
           {p.quantity === 1 ? (
             <button
               className="bg-slate-200 text-red-500 py-1 px-3 duration-300 rounded-lg hover:text-red-600"
-              onClick={() => clickHandler("REMOVE_ITEM", p)}
+              onClick={() => dispatch(removeItem(p))}
             >
               <RiDeleteBin6Line />
             </button>
           ) : (
             <button
               className="bg-slate-200 text-red-500 py-1 px-3 duration-300 rounded-lg hover:text-red-600"
-              onClick={() => clickHandler("DECREASE", p)}
+              onClick={() => dispatch(decrease(p))}
             >
               <FaCircleMinus />
             </button>
