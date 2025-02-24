@@ -4,14 +4,16 @@ import { FaCircleMinus, FaCirclePlus } from "react-icons/fa6";
 
 import Loader from "../Components/Loader";
 
-import { useProducts } from "../Context/ProductProvider";
-import { useCart } from "../Context/cartProvider";
+// import { useProducts } from "../Context/ProductProvider";
+// import { useCart } from "../Context/cartProvider";
 import { productsQuantity } from "../helpers/helper";
+import { useSelector } from "react-redux";
 
 const ProductDetailsPage = () => {
   const { id } = useParams();
-  const products = useProducts();
-  const [state, dispatch] = useCart();
+  const { products } = useSelector((state) => state.Products);
+  console.log(products);
+  const [state, dispatch] = [];
   const product = products.find((item) => item.id === Number(id));
 
   const clickHandler = (type) => {
@@ -24,7 +26,7 @@ const ProductDetailsPage = () => {
       </div>
     );
   }
-  const quantity = productsQuantity(state, product.id);
+  const quantity = 0;
 
   return (
     <>

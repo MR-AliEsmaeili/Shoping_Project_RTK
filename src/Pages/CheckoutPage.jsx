@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
-import { useCart } from "../Context/cartProvider";
+// import { useCart } from "../Context/cartProvider";
 
 import NOTFOUND from "../Assets/not-found.gif";
 
 import CardCheckout from "../Components/CardCheckout";
 
 const CheckoutPage = () => {
-  const [state, dispatch] = useCart();
-  const { selectedItems, itemCounter, total, checkout } = state;
+  const [state, dispatch] = [];
+  // const { selectedItems, itemCounter, total, checkout } = state;
   const clickHandler = (type, payload) => {
     dispatch({ type, payload });
   };
@@ -47,14 +47,14 @@ const CheckoutPage = () => {
         </div>
         <aside className="w-full h-fit md:w-1/3 bg-white rounded-lg p-6 shadow-lg">
           <p className="text-lg font-semibold text-gray-800">
-            تعداد اقلام سبد:{" "}
+            تعداد اقلام سبد:
             <span className="text-indigo-700">{itemCounter}</span>
           </p>
           <p className="text-lg font-semibold text-gray-800">
             قیمت نهایی: <span className="text-indigo-700">{total} تومان</span>
           </p>
           <p className="text-lg font-semibold text-gray-800">
-            وضعیت:{" "}
+            وضعیت:
             <span className={checkout ? "text-green-600" : "text-orange-500"}>
               {checkout ? "پرداخت شده" : "در انتظار پرداخت"}
             </span>

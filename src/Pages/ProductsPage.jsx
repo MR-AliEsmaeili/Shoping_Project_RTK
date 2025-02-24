@@ -1,5 +1,5 @@
 import Card from "../Components/Card";
-import { useProducts } from "../Context/ProductProvider";
+// import { useProducts } from "../Context/ProductProvider";
 import Loader from "../Components/Loader";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
@@ -10,25 +10,32 @@ import {
 } from "../helpers/helper";
 import SideBar from "../Components/SideBar";
 import SearchBox from "../Components/SearchBox";
+import { fetchProducts } from "../Features/productsSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const ProductsPage = () => {
   const [search, setSearch] = useState("");
   const [displayed, setDisplayed] = useState([]);
   const [query, setQuery] = useState({});
 
-  const Products = useProducts();
+  const { products, loading } = useSelector((state) => state.Products);
+  const dispatch = useDispatch();
+  console.log(products);
   const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
-    setDisplayed(Products);
+    dispatch(fetchProducts());
+  }, []);
+  useEffect(() => {
+    setDisplayed(products);
     setSearch(query.search || "");
-    // const Query =
+
     setQuery(getinitialQuery(searchParams));
-  }, [Products]);
+  }, [products]);
 
   useEffect(() => {
     setSearchParams(query);
-    let finalProducts = searchProducts(Products, query.search);
+    let finalProducts = searchProducts(products, query.search);
     finalProducts = filterProducts(finalProducts, query.category);
     setDisplayed(finalProducts);
   }, [query]);
@@ -37,7 +44,7 @@ const ProductsPage = () => {
     <>
       <SearchBox search={search} setSearch={setSearch} setQuery={setQuery} />
       <div className="flex flex-col md:flex-row mt-10 gap-6">
-        {Products.length === 0 ? (
+        {loading ? (
           <Loader />
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10 flex-1">

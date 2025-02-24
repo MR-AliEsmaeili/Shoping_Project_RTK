@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import { SlBasket } from "react-icons/sl";
-import { useCart } from "../Context/cartProvider";
+// import { useCart } from "../Context/cartProvider";
 
 const Layout = ({ children }) => {
-  const [state] = useCart();
+  const [state] = [];
   return (
     <>
       <div className="flex fixed right-0 top-0 z-10   w-full  shadow-md shadow-gray-300 ">
@@ -18,7 +18,7 @@ const Layout = ({ children }) => {
           >
             <Link className="font-extrabold flex" to="./checkout">
               <span className="text-yellow-400">
-                {state.selectedItems.length > 0 && state.itemCounter}
+                {/* {state.selectedItems.length > 0 && null} */}
               </span>
               <SlBasket className="text-2xl" />
             </Link>
