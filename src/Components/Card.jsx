@@ -3,16 +3,15 @@ import { Link } from "react-router-dom";
 import { productsQuantity, ShortenText } from "../helpers/helper";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FaCircleMinus, FaCirclePlus } from "react-icons/fa6";
-import { useCart } from "../Context/cartProvider";
 import { FaShoppingBasket } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { addItem, decrease, increase, removeItem } from "../Features/cartSlice";
 
 const Card = ({ data }) => {
   const { id, title, image, price } = data;
-  const [state, dispatch] = useCart();
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state.Cart);
 
-  const clickHandler = (type) => {
-    dispatch({ type, payload: data });
-  };
   const quantity = productsQuantity(state, id);
 
   return (
@@ -35,12 +34,11 @@ const Card = ({ data }) => {
         >
           <TbListDetails />
         </Link>
-        {/* <div className="flex justify-evenly items-center"> */}
         {quantity === 0 ? (
           <button
             className="bg-indigo-500 font-semibold duration-300 text-white px-3 py-2 rounded-lg  hover:bg-indigo-700 "
             title="اضافه به سبد خرید"
-            onClick={() => clickHandler("ADD_ITEM")}
+            onClick={() => dispatch(addItem(data))}
           >
             <FaShoppingBasket />
           </button>
@@ -48,7 +46,7 @@ const Card = ({ data }) => {
           <button
             className="bg-slate-200 text-green-600 duration-300 py-1 px-3 rounded-lg hover:text-green-700"
             title="اضافه کردن تعداد سبد خرید"
-            onClick={() => clickHandler("INCREASE")}
+            onClick={() => dispatch(increase(data))}
           >
             <FaCirclePlus />
           </button>
@@ -58,7 +56,7 @@ const Card = ({ data }) => {
           <button
             className="bg-slate-200 text-red-500 duration-300 py-1 px-3 rounded-lg hover:text-red-600"
             title="حذف از سبد خرید"
-            onClick={() => clickHandler("REMOVE_ITEM")}
+            onClick={() => dispatch(removeItem(data))}
           >
             <RiDeleteBin6Line />
           </button>
@@ -67,12 +65,11 @@ const Card = ({ data }) => {
           <button
             className="bg-slate-200 text-red-500 py-1 px-3 duration-300 rounded-lg hover:text-red-600"
             title="کاهش تعداد سبد خرید"
-            onClick={() => clickHandler("DECREASE")}
+            onClick={() => dispatch(decrease(data))}
           >
             <FaCircleMinus />
           </button>
         )}
-        {/* </div> */}
       </div>
     </div>
   );

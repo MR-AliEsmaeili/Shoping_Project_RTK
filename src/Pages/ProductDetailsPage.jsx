@@ -4,21 +4,18 @@ import { FaCircleMinus, FaCirclePlus } from "react-icons/fa6";
 
 import Loader from "../Components/Loader";
 
-// import { useProducts } from "../Context/ProductProvider";
-// import { useCart } from "../Context/cartProvider";
 import { productsQuantity } from "../helpers/helper";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { addItem, decrease, increase, removeItem } from "../Features/cartSlice";
 
 const ProductDetailsPage = () => {
   const { id } = useParams();
   const { products } = useSelector((state) => state.Products);
-  console.log(products);
-  const [state, dispatch] = [];
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state.Cart);
+  console.log(state);
   const product = products.find((item) => item.id === Number(id));
 
-  const clickHandler = (type) => {
-    dispatch({ type, payload: product });
-  };
   if (!product) {
     return (
       <div className="h-[70vh]">
@@ -26,8 +23,8 @@ const ProductDetailsPage = () => {
       </div>
     );
   }
-  const quantity = 0;
-
+  const quantity = productsQuantity(state, product.id);
+  console.log(quantity);
   return (
     <>
       <div className="h-[70vh]">
@@ -65,14 +62,14 @@ const ProductDetailsPage = () => {
               {quantity === 0 ? (
                 <button
                   className="bg-indigo-500 font-semibold duration-300 text-white px-3 py-2 rounded-lg  hover:bg-indigo-700"
-                  onClick={() => clickHandler("ADD_ITEM")}
+                  onClick={() => dispatch(addItem(product))}
                 >
                   افزودن به سبد خرید{" "}
                 </button>
               ) : (
                 <button
                   className="bg-slate-200 text-green-600 duration-300 py-1 px-3 rounded-lg hover:text-green-700"
-                  onClick={() => clickHandler("INCREASE")}
+                  onClick={() => dispatch(increase(product))}
                 >
                   <FaCirclePlus />
                 </button>
@@ -81,7 +78,7 @@ const ProductDetailsPage = () => {
               {quantity > 1 && (
                 <button
                   className="bg-slate-200 text-red-500 py-1 px-3 duration-300 rounded-lg hover:text-red-600"
-                  onClick={() => clickHandler("DECREASE")}
+                  onClick={() => dispatch(decrease(product))}
                 >
                   <FaCircleMinus />
                 </button>
@@ -89,7 +86,7 @@ const ProductDetailsPage = () => {
               {quantity === 1 && (
                 <button
                   className="bg-slate-200 text-red-500 duration-300 py-1 px-3 rounded-lg hover:text-red-600"
-                  onClick={() => clickHandler("REMOVE_ITEM")}
+                  onClick={() => dispatch(removeItem(product))}
                 >
                   <RiDeleteBin6Line />
                 </button>

@@ -1,5 +1,4 @@
 import Card from "../Components/Card";
-// import { useProducts } from "../Context/ProductProvider";
 import Loader from "../Components/Loader";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
@@ -20,7 +19,6 @@ const ProductsPage = () => {
 
   const { products, loading } = useSelector((state) => state.Products);
   const dispatch = useDispatch();
-  console.log(products);
   const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
